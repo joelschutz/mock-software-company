@@ -44,7 +44,7 @@ class License(models.Model):
     product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='licenses')
     client = models.ForeignKey('Client', on_delete=models.CASCADE, related_name='licenses')
     seller = models.ForeignKey('SalesPerson', on_delete=models.SET_NULL, related_name='licenses', null=True, blank=True)
-    activation_date = models.DateField(null=True, blank=False)
+    activation_date = models.DateField(default=None, null=True, blank=False)
     valid_time = models.DurationField(null=False, blank=False, choices=LICENSE_DURATION_CHOICES, default=ONE_MONTH)
     activated = models.BooleanField(default=False, null=False, blank=False)
 
