@@ -1,0 +1,21 @@
+{% block subject %}Escala de clientes para hoje{% endblock %}
+{% block plain %}
+  Olá {{seller}},
+
+  A licensa de alguns clientes estão expirando, não se esqueça de entrar em contato.
+  
+  As lincenças são:
+  {% for license, reason in licenses %}
+  
+  Produto: {{license.product}}
+  Expira em: {{license.expire_date|date:'d/m/Y'}}
+  Cliente: {{license.client}}
+  Email: {{license.client.email}}
+  Obs: {{reason}}
+
+  *********
+  {% endfor %}
+
+  Bom trabalho!
+  A Direção
+{% endblock %}
