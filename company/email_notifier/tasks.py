@@ -28,19 +28,20 @@ def check_licenses(target_date):
         
         if reason:
             try:
-                scheduled_sellers[active_license.seller].append((active_license, reason))
+                scheduled_sellers[active_license.seller][active_license.client].append((active_license, reason))
             except KeyError:
-                scheduled_sellers[active_license.seller] = [(active_license, reason)]
+                scheduled_sellers[active_license.seller] = {active_license.client:[(active_license, reason)]}
     
     return scheduled_sellers
         
-def send_email(seller, licenses):
+def send_email(seller, client, licenses):
     message = get_templated_mail(
         template_name='notify_seller',
         from_email=EMAIL_HOST_USER,
         to=[seller.email],
         context={
             'seller':seller,
+            'client': client,
             'licenses':licenses
         },)
     message.send()
@@ -49,4 +50,5 @@ def notify_sellers(target_date=datetime.date.today()):
     scheduled_sellers = check_licenses(target_date)
 
     for seller in scheduled_sellers.keys():
-        send_email(seller, scheduled_sellers[seller])
+        for client, licenses in scheduled_sellers[seller].items():
+            send_email(seller, client, licenses)

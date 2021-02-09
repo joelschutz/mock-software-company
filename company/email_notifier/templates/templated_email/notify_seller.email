@@ -1,16 +1,19 @@
-{% block subject %}Escala de clientes para hoje{% endblock %}
+{% block subject %}Contatar {{client}} - Licensas expirando{% endblock %}
 {% block plain %}
   Olá {{seller}},
 
-  A licensa de alguns clientes estão expirando, não se esqueça de entrar em contato.
-  
+  As licensas de um cliente estão expirando, não se esqueça de entrar em contato.
+
+  Informações de contato:
+  Cliente: {{client}}
+  Email: {{client.email}}
+
   As lincenças são:
   {% for license, reason in licenses %}
-  
+  ID: {{license.id}}
+  Tipo de licença: {{license.valid_time}}
   Produto: {{license.product}}
   Expira em: {{license.expire_date|date:'d/m/Y'}}
-  Cliente: {{license.client}}
-  Email: {{license.client.email}}
   Obs: {{reason}}
 
   *********
